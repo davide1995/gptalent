@@ -9,7 +9,7 @@ import imghdr
 from dataaccess.DB import DB
 from dataaccess.inmemory_db import InMemoryDB
 from dataaccess.mongo_db import MongoDB
-from services import auth_service, phish_service, readiness_service, export_service
+from services import auth_service, analyse_service, readiness_service, export_service
 from services.helpers import proxycurl_helper, openai_helper
 
 app = Flask(__name__, instance_relative_config=True)
@@ -84,8 +84,8 @@ def send():
             'user_response': 'Empty input'
         }
 
-    linkedin_url = phish_service.adjust_for_linkedin_url(user_input)
-    response = phish_service.phish(
+    linkedin_url = analyse_service.adjust_for_linkedin_url(user_input)
+    response = analyse_service.analyse(
         user_info,
         linkedin_url,
         int(app.config['PROXYCURL_MAX_USER_REQUESTS_HOUR']),
@@ -95,7 +95,7 @@ def send():
     if response['success']:
         url_profile_image = url_for(
             'get_profile_image',
-            username=phish_service.get_username_from_url(linkedin_url),
+            username=analyse_service.get_username_from_url(linkedin_url),
             _external=True
         )
         response['profile_image'] = url_profile_image
@@ -105,22 +105,13 @@ def send():
 
 @app.route('/profile_image/<username>')
 def get_profile_image(username):
-    image = phish_service.get_profile_image_by_username(username)
+    image = analyse_service.get_profile_image_by_username(username)
     if image:
         image_data = BytesIO(image)
         mimetype = '' if imghdr.what(image_data) else 'image/svg+xml'
         return send_file(image_data, mimetype=mimetype)
     else:
         return 'User has not been loaded yet. Cannot fetch the profile image', 404
-
-
-@app.route('/trace/<email_id>')
-def trace_email_link_click(email_id: str):
-    ip_address = request.remote_addr
-    user_agent = str(request.user_agent)
-    phish_service.add_link_trace(email_id, ip_address, user_agent)
-
-    return render_template('scam.html')
 
 
 @app.route('/export-all-mail', methods=['GET'])

@@ -5,7 +5,6 @@ Must not:
 
 Must:
 - The email must be well structured
-- The email must make the recipient click over a link formatted exactly in this way: "<a target='_blank' href='{{ email_link_reference }}'>See more</a>"
 - The email must be signed at the end by {{ sender }}, who is not from the same company as the recipient
 - The email must include the subject which must be marked with "Subject:"
 - The email is being written in {{ year }}

@@ -1,4 +1,3 @@
-import datetime
 import json
 import requests
 
@@ -16,7 +15,7 @@ from services.helpers import proxycurl_helper, openai_helper
 PROFILE_IMAGES_CACHE = ExpiringDict(max_len=1000, max_age_seconds=300)
 
 
-def phish(user_info: dict, linkedin_url: str, user_max_allowed_nubela: int, user_max_allowed_openai: int) -> dict:
+def analyse(user_info: dict, linkedin_url: str, user_max_allowed_nubela: int, user_max_allowed_openai: int) -> dict:
     linkedin_username = get_username_from_url(linkedin_url)
 
     from_api = False
@@ -35,15 +34,13 @@ def phish(user_info: dict, linkedin_url: str, user_max_allowed_nubela: int, user
 
         proxycurl_helper.check_enough_information_in_profile(user_data)
 
-        gpt_request, gpt_response = openai_helper.generate_phishing_email(user_max_allowed_openai, user_info['email'], user_data)
+        gpt_request, gpt_response = openai_helper.generate_email(user_max_allowed_openai, user_info['email'], user_data)
 
         PROFILE_IMAGES_CACHE[linkedin_username] = profile_image
 
         subject, mail = openai_helper.extract_subject_mail(gpt_response)
 
-        id_phish = DB.get_instance().add_phish(user_info, from_api, user_data, profile_image, gpt_request, subject, mail)
-
-        gpt_response = gpt_response.replace("[DOCUMENT_ID]", id_phish)
+        DB.get_instance().add_trace(user_info, from_api, user_data, profile_image, gpt_request, subject, mail)
 
         return {
             'success': True,
@@ -73,13 +70,3 @@ def adjust_for_linkedin_url(user_input: str) -> str:
     elif user_input.endswith('/'):
         return user_input[:-1]
     return user_input
-
-
-def add_link_trace(id: str, ip_address: str, user_agent: str):
-    data = {
-        'ip_address': ip_address,
-        'user_agent': user_agent,
-        'datetime': datetime.datetime.utcnow()
-    }
-
-    DB.get_instance().add_phish_trace(id, data)

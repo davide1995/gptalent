@@ -5,7 +5,7 @@ from services.helpers import openai_helper
 
 openai_helper.api_key = OPENAI_API_KEY
 
-openai_helper.generate_phishing_email(
+openai_helper.generate_email(
     OPENAI_MAX_USER_REQUESTS_HOUR,
     'davide95.v@gmail.com',
     json.load(open('../mocks/proxycurl/example.json'))
