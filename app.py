@@ -10,7 +10,7 @@ from dataaccess.DB import DB
 from dataaccess.inmemory_db import InMemoryDB
 from dataaccess.mongo_db import MongoDB
 from services import auth_service, phish_service, readiness_service, export_service
-from services.helpers import proxycurl_helper, openai_helper, sendgrid_helper
+from services.helpers import proxycurl_helper, openai_helper
 
 app = Flask(__name__, instance_relative_config=True)
 
@@ -29,7 +29,6 @@ client = OAuth2Session(
 
 proxycurl_helper.api_key = app.config['NEBULA_API_KEY']
 openai_helper.api_key = app.config['OPENAI_API_KEY']
-sendgrid_helper.api_key = app.config['SENDGRID_API_KEY']
 
 persistence_strategy = app.config['PERSISTENCE_STRATEGY']
 if persistence_strategy == 'mongo':
