@@ -19,7 +19,7 @@ def __try_to_generate_gpt_text(openai_request):
     return openai.Completion.create(**openai_request)
 
 
-def generate_phishing_email(user_max_allowed: int, mail_address: str, profile: dict) -> tuple[dict, str]:
+def generate_email(user_max_allowed: int, mail_address: str, profile: dict) -> tuple[dict, str]:
     _stop_if_user_access_not_allowed(user_max_allowed, mail_address)
 
     openai.api_key = api_key
@@ -32,7 +32,6 @@ def generate_phishing_email(user_max_allowed: int, mail_address: str, profile: d
     data = {
         'sender': 'Samuel',
         'year': 2023,
-        'email_link_reference': 'trace/[DOCUMENT_ID]',
         'recipient': profile['full_name'],
         'about': profile['summary'] or '',
         'occupation': profile['occupation'] or '',
