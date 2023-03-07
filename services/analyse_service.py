@@ -15,32 +15,34 @@ from services.helpers import proxycurl_helper, openai_helper
 PROFILE_IMAGES_CACHE = ExpiringDict(max_len=1000, max_age_seconds=300)
 
 
-def analyse(user_info: dict, linkedin_url: str, user_max_allowed_nubela: int, user_max_allowed_openai: int) -> dict:
+def analyse(requester_linkedin_data: dict, requester_parameters: dict, user_max_allowed_nubela: int, user_max_allowed_openai: int) -> dict:
+    linkedin_url = requester_parameters['url']
+
     linkedin_username = get_username_from_url(linkedin_url)
 
     from_api = False
     profile_image = None
     if linkedin_username == 'example':
         with open('mocks/proxycurl/example.json', 'r') as file:
-            user_data = json.loads(file.read())
+            candidate_linkedin_data = json.loads(file.read())
     else:
-        profile_image, user_data = DB.get_instance().get_linked_in_data_by_username(linkedin_username)
+        profile_image, candidate_linkedin_data = DB.get_instance().get_linked_in_data_by_username(linkedin_username)
 
     try:
-        if not user_data:
+        if not candidate_linkedin_data:
             from_api = True
-            user_data = proxycurl_helper.load_linkedin_data(user_max_allowed_nubela, user_info['email'], linkedin_url)
-            profile_image = requests.get(user_data['profile_pic_url']).content
+            candidate_linkedin_data = proxycurl_helper.load_linkedin_data(requester_linkedin_data['email'], linkedin_url, user_max_allowed_nubela)
+            profile_image = requests.get(candidate_linkedin_data['profile_pic_url']).content
 
-        proxycurl_helper.check_enough_information_in_profile(user_data)
+        proxycurl_helper.check_enough_information_in_profile(candidate_linkedin_data)
 
-        gpt_request, gpt_response = openai_helper.generate_email(user_max_allowed_openai, user_info['email'], user_data)
+        gpt_request, gpt_response = openai_helper.generate_email(requester_linkedin_data, requester_parameters, candidate_linkedin_data, user_max_allowed_openai)
 
         PROFILE_IMAGES_CACHE[linkedin_username] = profile_image
 
         subject, mail = openai_helper.extract_subject_mail(gpt_response)
 
-        DB.get_instance().add_trace(user_info, from_api, user_data, profile_image, gpt_request, subject, mail)
+        DB.get_instance().add_trace(requester_linkedin_data, from_api, candidate_linkedin_data, profile_image, gpt_request, subject, mail)
 
         return {
             'success': True,
@@ -49,7 +51,7 @@ def analyse(user_info: dict, linkedin_url: str, user_max_allowed_nubela: int, us
         }
     except (NubelaAuthException, NubelaProfileNotFoundException, NubelaProfileNotEnoughInformationException,
             NubelaMaxUserRequestsAllowedException, OpenAiMaxUserRequestsAllowedException) as e:
-        DB.get_instance().add_error(user_info, linkedin_url, type(e).__name__, e.message)
+        DB.get_instance().add_error(requester_linkedin_data, linkedin_url, type(e).__name__, e.message)
         return {
             'success': False,
             'user_response': e.message

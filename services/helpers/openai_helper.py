@@ -1,5 +1,5 @@
 import json
-
+import datetime
 import openai
 import requests
 from openai.error import RateLimitError
@@ -19,8 +19,8 @@ def __try_to_generate_gpt_text(openai_request):
     return openai.Completion.create(**openai_request)
 
 
-def generate_email(user_max_allowed: int, mail_address: str, profile: dict) -> tuple[dict, str]:
-    _stop_if_user_access_not_allowed(user_max_allowed, mail_address)
+def generate_email(requester_linkedin_data: dict, requester_parameters: dict, candidate_linkedin_data: dict, user_max_allowed: int) -> tuple[dict, str]:
+    _stop_if_user_access_not_allowed(user_max_allowed, requester_linkedin_data['email'])
 
     openai.api_key = api_key
 
@@ -30,14 +30,18 @@ def generate_email(user_max_allowed: int, mail_address: str, profile: dict) -> t
     template = Template(template_str)
 
     data = {
-        'sender': 'Samuel',
-        'year': 2023,
-        'recipient': profile['full_name'],
-        'about': profile['summary'] or '',
-        'occupation': profile['occupation'] or '',
-        'headline': profile['headline'] or '',
-        'experiences': profile['experiences'],
-        'educations': profile['education']
+        'sender': f"{requester_linkedin_data['profile']['localizedFirstName']} {requester_linkedin_data['profile']['localizedLastName']}",
+        'requester_position': requester_parameters['requester_position'],
+        'searched_position': requester_parameters['searched_position'],
+
+        'name': candidate_linkedin_data['full_name'],
+        'about': candidate_linkedin_data['summary'] or '',
+        'occupation': candidate_linkedin_data['occupation'] or '',
+        'headline': candidate_linkedin_data['headline'] or '',
+        'experiences': candidate_linkedin_data['experiences'],
+        'educations': candidate_linkedin_data['education'],
+
+        'year': datetime.datetime.now().year,
     }
 
     gpt_query = template.render(**data)
