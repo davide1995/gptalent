@@ -10,8 +10,9 @@ Must:
 - The email is being written in {{ year }}
 - The email must refrain from make any assumptions about the candidate
 - The candidate is a good one to fill the position {{ searched_position }}
-- The company for which the candidate can be good is Zuhlke Asia in {{ location }
+- The company for which the candidate can be good is Zuhlke Asia in {{ location }}
 - The email must contain some information about Zuhlke Asia
+- The email must have {{ number_of_paragraphs }} paragraphs, not more and not less
 - The email must take into consideration the candidate LinkedIn information which are given below:
 ###
 Candidate Information:

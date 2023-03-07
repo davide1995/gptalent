@@ -89,7 +89,8 @@ def send():
     requester_parameters = {
         'url': linkedin_url,
         'searched_position': data['searched-position'],
-        'requester_position': data['requester-position']
+        'requester_position': data['requester-position'],
+        'number_of_paragraphs': data['number-of-paragraphs']
     }
 
     response = analyse_service.analyse(
