@@ -10,7 +10,7 @@ requester_linkedin_data = {
         'localizedLastName': 'John',
         'localizedFirstName': 'Watson'
     },
-    'email': 'davide95.v@gmail.com'
+    'email': 'john.watson@gmail.com'
 }
 
 requester_parameters = {
