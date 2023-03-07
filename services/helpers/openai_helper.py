@@ -42,6 +42,7 @@ def generate_email(requester_linkedin_data: dict, requester_parameters: dict, ca
         'educations': candidate_linkedin_data['education'],
 
         'year': datetime.datetime.now().year,
+        'location': 'Singapore'  # Cool if we can let the requester decide it
     }
 
     gpt_query = template.render(**data)

@@ -5,12 +5,12 @@ Must not:
 
 Must:
 - The email must be well structured
-- The email must be signed at the end by {{ sender }}, who works for Zuhlke Asia as {{ requester_position }}
+- The email must be signed at the end by {{ sender }}, who works for Zuhlke Asia in {{ location }} as {{ requester_position }}
 - The email must include the subject at the start which must be marked with "Subject:"
 - The email is being written in {{ year }}
 - The email must refrain from make any assumptions about the candidate
 - The candidate is a good one to fill the position {{ searched_position }}
-- The company for which the candidate can be good is Zuhlke Asia
+- The company for which the candidate can be good is Zuhlke Asia in {{ location }
 - The email must contain some information about Zuhlke Asia
 - The email must take into consideration the candidate LinkedIn information which are given below:
 ###
