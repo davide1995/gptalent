@@ -26,6 +26,49 @@
         <label for="number-of-paragraphs" class="form__label">Number of paragraphs</label>
     </div>
 
+    <div class="row">
+        <div>
+            <div class="form__label">Tone:</div>
+            <input type="radio" id="friendly" name="tone" value="friendly" checked>
+            <label for="friendly" title="A recruiter may use a friendly tone to create a more casual and approachable atmosphere. This tone can help to build a positive rapport with the candidate and encourage open communication">Friendly</label>
+            <br/>
+            <input type="radio" id="professional" name="tone" value="professional">
+            <label for="professional" title="This tone is formal and straightforward, conveying a sense of professionalism and business-like communication. Recruiters may use this tone to demonstrate that they take the hiring process seriously and that they expect the same level of professionalism from the candidate">Professional</label>
+            <br/>
+            <input type="radio" id="excited" name="tone" value="excited">
+            <label for="excited" title="When a recruiter is particularly enthusiastic about a candidate or the job opportunity, they may use an excited tone in their message. This can help to convey their enthusiasm and passion for the position and the company">Excited</label>
+            <br/>
+            <input type="radio" id="persuasive" name="tone" value="persuasive">
+            <label for="persuasive" title="If a recruiter is trying to convince a candidate to apply for a job or consider a job offer, they may use a persuasive tone. This can involve highlighting the benefits of the job, the company culture, or the career growth opportunities">Persuasive</label>
+            <br/>
+            <input type="radio" id="humorous" name="tone" value="humorous">
+            <label for="humorous" title="If the company has a fun or lighthearted culture, a recruiter may use a humorous tone in their message to convey the company's personality and make a connection with the candidate. However, it's important to use humor carefully and in a way that is appropriate and respectful">Humorous</label>
+        </div>
+
+        <div>
+            <div class="form__label">Location:</div>
+            <input type="radio" id="hong-kong" name="location" value="Hong Kong" checked>
+            <label for="hong-kong">Hong Kong</label>
+            <br/>
+            <input type="radio" id="singapore" name="location" value="Singapore">
+            <label for="singapore">Singapore</label>
+            <br/>
+            <input type="radio" id="vietnam" name="location" value="Vietnam">
+            <label for="vietnam">Vietnam</label>
+        </div>
+    </div>
+
+    <div>
+        <label class="form__label" for="benefits">Benefits:</label><br/>
+        <textarea id="benefits" name="benefits" rows="10">
+Work from anywhere for a max of 3 months per year
+Work from another Zuhlke office for a max of 2 months per year, with flight & accommodation sponsored
+Grow with Us Allowance to reward loyalty
+Extra insurance reimbursement on top on the Life & Medical insurance we provided
+Flexibility to work from home
+Dedicated budget for Training & Development</textarea>
+    </div>
+
     <div class="mainBtnContainer">
         <button type="submit" id="submit-button" class="mainBtn" disabled>
             Generate Mail

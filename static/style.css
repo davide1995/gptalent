@@ -137,7 +137,6 @@ nav {
 }
 
 .form__field:placeholder-shown ~ .form__label {
-    font-size: 1.3rem;
     cursor: text;
     top: 20px;
 }
@@ -147,9 +146,18 @@ nav {
     top: 0;
     display: block;
     transition: 0.2s;
+    font-size: 1.3rem;
+}
+
+label {
     font-size: 1rem;
     color: #9b9b9b;
     margin-bottom: 20px;
+}
+
+.row {
+    display: flex;
+    justify-content: space-around;
 }
 
 .form__field:focus {
@@ -173,4 +181,6 @@ nav {
     box-shadow: none;
 }
 
-
+textarea {
+    width: 100%;
+}

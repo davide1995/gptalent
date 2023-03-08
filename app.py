@@ -87,10 +87,13 @@ def send():
 
     linkedin_url = analyse_service.adjust_for_linkedin_url(url_or_username)
     requester_parameters = {
-        'url': linkedin_url,
-        'searched_position': data['searched-position'],
-        'requester_position': data['requester-position'],
-        'number_of_paragraphs': data['number-of-paragraphs']
+        'url': linkedin_url.strip(),
+        'searched_position': data['searched-position'].strip(),
+        'requester_position': data['requester-position'].strip(),
+        'number_of_paragraphs': data['number-of-paragraphs'].strip(),
+        'location': data['location'],
+        'tone': data['tone'],
+        'benefits': data['benefits'].strip()
     }
 
     response = analyse_service.analyse(
