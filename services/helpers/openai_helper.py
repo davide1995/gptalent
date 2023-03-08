@@ -16,7 +16,8 @@ api_key: str
        wait=wait_exponential(multiplier=1, min=1, max=30),
        stop=stop_after_attempt(10))
 def __try_to_generate_gpt_text(openai_request):
-    return openai.Completion.create(**openai_request)
+
+    return openai.ChatCompletion.create(**openai_request)
 
 
 def generate_email(requester_linkedin_data: dict, requester_parameters: dict, candidate_linkedin_data: dict, user_max_allowed: int) -> tuple[dict, str]:
@@ -51,8 +52,11 @@ def generate_email(requester_linkedin_data: dict, requester_parameters: dict, ca
     gpt_query = template.render(**data)
 
     openai_request = dict(
-        model='text-davinci-003',
-        prompt=gpt_query,
+        model='gpt-3.5-turbo',
+        messages=[
+            {'role': 'system', 'content': 'You are a tech recruiter.'},
+            {'role': 'user', 'content': gpt_query}
+        ],
         temperature=1,
         max_tokens=1000,
         top_p=1,
@@ -61,7 +65,7 @@ def generate_email(requester_linkedin_data: dict, requester_parameters: dict, ca
     )
 
     response = __try_to_generate_gpt_text(openai_request)
-    return openai_request, response.choices[0].text.strip()
+    return openai_request, response['choices'][0]['message']['content']
 
 
 def get_usage() -> float or bool:
