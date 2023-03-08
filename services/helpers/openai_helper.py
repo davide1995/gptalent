@@ -34,6 +34,7 @@ def generate_email(requester_linkedin_data: dict, requester_parameters: dict, ca
         'requester_position': requester_parameters['requester_position'],
         'searched_position': requester_parameters['searched_position'],
         'number_of_paragraphs': requester_parameters['number_of_paragraphs'],
+        'location': requester_parameters['location'],
 
         'name': candidate_linkedin_data['full_name'],
         'about': candidate_linkedin_data['summary'] or '',
@@ -42,8 +43,7 @@ def generate_email(requester_linkedin_data: dict, requester_parameters: dict, ca
         'experiences': candidate_linkedin_data['experiences'],
         'educations': candidate_linkedin_data['education'],
 
-        'year': datetime.datetime.now().year,
-        'location': 'Singapore'  # Cool if we can let the requester decide it
+        'year': datetime.datetime.now().year
     }
 
     gpt_query = template.render(**data)
