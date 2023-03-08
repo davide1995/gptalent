@@ -125,14 +125,14 @@ def get_profile_image(username):
         return 'User has not been loaded yet. Cannot fetch the profile image', 404
 
 
-@app.route('/export-all-mail', methods=['GET'])
-def export_all_email():
+@app.route('/export-all-messages', methods=['GET'])
+def export_all_messages():
     user_info = auth_service.verify_token(__get_token_cookie())
     authorized_users = app.config['AUTHORIZED_USERS'].split(':')
     if not user_info or user_info.get('email') not in authorized_users:
         abort(401)
 
-    filename, content = export_service.export_all_mails()
+    filename, content = export_service.export_all_messages()
 
     response = make_response(content)
     response.headers['Content-Disposition'] = 'attachment; filename=' + filename

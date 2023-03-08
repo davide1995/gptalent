@@ -23,7 +23,7 @@ class MongoDB(DbDAO):
         except ServerSelectionTimeoutError:
             return False
 
-    def add_trace(self, requester: dict, from_api: bool, linkedin_data: dict, profile_image: bytes, openai_request: dict, subject: str, mail: str) -> str:
+    def add_trace(self, requester: dict, from_api: bool, linkedin_data: dict, profile_image: bytes, openai_request: dict, openai_response: str) -> str:
         collection = 'traces'
         coll = self._db[collection]
 
@@ -33,8 +33,7 @@ class MongoDB(DbDAO):
             'linkedin_data': linkedin_data,
             'profile_image': profile_image,
             'openai_request': openai_request,
-            'subject': subject,
-            'mail': mail
+            'openai_response': openai_response
         }
 
         return str(coll.insert_one(data).inserted_id)
@@ -77,7 +76,7 @@ class MongoDB(DbDAO):
         collection = 'traces'
         coll = self._db[collection]
 
-        projection = {'openai_request.prompt': 1, 'mail': 1, '_id': 0}
+        projection = {'openai_request.prompt': 1, 'openai_response': 1, '_id': 0}
         cursor = coll.find({}, projection)
 
         return list(map(lambda doc: flatten(doc, reducer='dot'), cursor))

@@ -20,7 +20,7 @@ def __try_to_generate_gpt_text(openai_request):
     return openai.ChatCompletion.create(**openai_request)
 
 
-def generate_email(requester_linkedin_data: dict, requester_parameters: dict, candidate_linkedin_data: dict, user_max_allowed: int) -> tuple[dict, str]:
+def generate_message(requester_linkedin_data: dict, requester_parameters: dict, candidate_linkedin_data: dict, user_max_allowed: int) -> tuple[dict, str]:
     _stop_if_user_access_not_allowed(user_max_allowed, requester_linkedin_data['email'])
 
     openai.api_key = api_key
@@ -76,12 +76,6 @@ def get_usage() -> float or bool:
     if response.status_code == 200:
         return json.loads(response.content)['total_used']
     return False
-
-
-def extract_subject_mail(text: str) -> tuple[str, str]:
-    subject = text.split('\n')[0].split('Subject:')[1].strip()
-    mail = '\n'.join(text.split('\n')[1:]).strip()
-    return subject, mail
 
 
 def _stop_if_user_access_not_allowed(user_max_allowed: int, mail_address: str):

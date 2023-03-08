@@ -8,7 +8,7 @@ class DbDAO(ABC):
         pass
 
     @abstractmethod
-    def add_trace(self, requester: dict, from_api: bool, linkedin_data: dict, profile_image: bytes, openai_request: dict, subject: str, mail: str) -> str:
+    def add_trace(self, requester: dict, from_api: bool, linkedin_data: dict, profile_image: bytes, openai_request: dict, openai_response: str) -> str:
         pass
 
     @abstractmethod
