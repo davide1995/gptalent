@@ -76,7 +76,7 @@ class MongoDB(DbDAO):
         collection = 'traces'
         coll = self._db[collection]
 
-        projection = {'openai_request.prompt': 1, 'mail': 1, '_id': 0}
+        projection = {'openai_request.prompt': 1, 'openai_response': 1, '_id': 0}
         cursor = coll.find({}, projection)
 
         return list(map(lambda doc: flatten(doc, reducer='dot'), cursor))
