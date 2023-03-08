@@ -13,9 +13,10 @@ Must:
 - The message must contain some information about Zuhlke {{ location }}
 - The message must specify that Zuhlke is an IT consultancy that provides solutions and ideas to our clients in various industries (e.g. Banking, Insurance, Logistics)
 - The message must specify that Zuhlke is a Swiss company rapidly expanding in Asia over the past few years. Zuhlke Group holds over 50 years of history from Europe. We have been establishing our footprint in Asia since 2017, and seeing double-digit growth year-on-year! In Asia, we focus on delivering innovative digital solutions using cutting edge technologies
-- The message must have {{ number_of_paragraphs }} paragraphs, not more and not less
+- The message must specify that some of the Zuhlke projects can be found in the following link: https://www.zuehlke.com/en/discover-our-projects
+- The message must have {{ number_of_paragraphs }} paragraphs
 - The message tone must be {{ tone }}
-- The message must specify that working for Zuhlke allows following benefits:
+- The message must specify that working for Zuhlke allows benefits defined below. See more: https://www.zuehlke.com/en/benefits-at-zuhlke-asia
 ###
 {{ benefits }}
 ###
