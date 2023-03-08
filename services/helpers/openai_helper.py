@@ -36,6 +36,7 @@ def generate_email(requester_linkedin_data: dict, requester_parameters: dict, ca
         'number_of_paragraphs': requester_parameters['number_of_paragraphs'],
         'location': requester_parameters['location'],
         'tone': requester_parameters['tone'],
+        'benefits': requester_parameters['benefits'],
 
         'name': candidate_linkedin_data['full_name'],
         'about': candidate_linkedin_data['summary'] or '',

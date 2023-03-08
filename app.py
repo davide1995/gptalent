@@ -92,7 +92,8 @@ def send():
         'requester_position': data['requester-position'],
         'number_of_paragraphs': data['number-of-paragraphs'],
         'location': data['location'],
-        'tone': data['tone']
+        'tone': data['tone'],
+        'benefits': data['benefits']
     }
 
     response = analyse_service.analyse(

@@ -142,14 +142,11 @@ nav {
 }
 
 .form__label {
-    font-size: 1.3rem;
-}
-
-.form__label {
     position: absolute;
     top: 0;
     display: block;
     transition: 0.2s;
+    font-size: 1.3rem;
 }
 
 label {
@@ -184,4 +181,6 @@ label {
     box-shadow: none;
 }
 
-
+textarea {
+    width: 100%;
+}
