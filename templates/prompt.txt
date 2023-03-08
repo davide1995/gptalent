@@ -16,7 +16,7 @@ Must:
 - The message must specify that some of the Zuhlke projects can be found in the following link: https://www.zuehlke.com/en/discover-our-projects
 - The message must have {{ number_of_paragraphs }} paragraphs
 - The message tone must be {{ tone }}
-- The message must specify that working for Zuhlke allows benefits defined below. See more: https://www.zuehlke.com/en/benefits-at-zuhlke-asia
+- The message must specify that working for Zuhlke allows benefits reported in https://www.zuehlke.com/en/benefits-at-zuhlke-asia and also defined below:
 ###
 {{ benefits }}
 ###
