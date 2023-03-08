@@ -11,7 +11,7 @@ class InMemoryDB(DbDAO):
     def is_up(self) -> bool:
         return True
 
-    def add_trace(self, requester: dict, from_api: bool, linkedin_data: dict, profile_image: bytes, openai_request: dict, subject: str, mail: str) -> str:
+    def add_trace(self, requester: dict, from_api: bool, linkedin_data: dict, profile_image: bytes, openai_request: dict, openai_response: str) -> str:
         collection = 'traces'
 
         data = {
@@ -20,8 +20,7 @@ class InMemoryDB(DbDAO):
             'linkedin_data': linkedin_data,
             'profile_image': profile_image,
             'openai_request': openai_request,
-            'subject': subject,
-            'mail': mail
+            'openai_response': openai_response
         }
 
         self._db.setdefault(collection, []).append(data)
@@ -58,7 +57,7 @@ class InMemoryDB(DbDAO):
     def get_ai_request_response(self) -> list[dict]:
         collection = 'traces'
 
-        return list(map(lambda doc: {'openai_request.prompt': doc['openai_request']['prompt'], 'mail': doc['mail']},
+        return list(map(lambda doc: {'openai_request.prompt': doc['openai_request']['prompt'], 'openai_response': doc['openai_response']},
                         self._db.get(collection, [])))
 
     def get_number_of_openai_api_requests_last_hour(self, email: str) -> int:

@@ -132,7 +132,7 @@ def export_all_email():
     if not user_info or user_info.get('email') not in authorized_users:
         abort(401)
 
-    filename, content = export_service.export_all_mails()
+    filename, content = export_service.export_all_messages()
 
     response = make_response(content)
     response.headers['Content-Disposition'] = 'attachment; filename=' + filename

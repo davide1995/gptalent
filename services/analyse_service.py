@@ -36,13 +36,11 @@ def analyse(requester_linkedin_data: dict, requester_parameters: dict, user_max_
 
         proxycurl_helper.check_enough_information_in_profile(candidate_linkedin_data)
 
-        gpt_request, gpt_response = openai_helper.generate_email(requester_linkedin_data, requester_parameters, candidate_linkedin_data, user_max_allowed_openai)
+        gpt_request, gpt_response = openai_helper.generate_message(requester_linkedin_data, requester_parameters, candidate_linkedin_data, user_max_allowed_openai)
 
         PROFILE_IMAGES_CACHE[linkedin_username] = profile_image
 
-        subject, mail = openai_helper.extract_subject_mail(gpt_response)
-
-        DB.get_instance().add_trace(requester_linkedin_data, from_api, candidate_linkedin_data, profile_image, gpt_request, subject, mail)
+        DB.get_instance().add_trace(requester_linkedin_data, from_api, candidate_linkedin_data, profile_image, gpt_request, gpt_response)
 
         return {
             'success': True,

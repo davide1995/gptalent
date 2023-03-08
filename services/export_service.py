@@ -5,7 +5,7 @@ from datetime import datetime
 from dataaccess.DB import DB
 
 
-def export_all_mails() -> tuple[str, bytes]:
+def export_all_messages() -> tuple[str, bytes]:
     data = DB.get_instance().get_ai_request_response()
 
     dt = datetime.now()

@@ -18,7 +18,7 @@ requester_parameters = {
     'requester_position': 'Account Specialist'
 }
 
-openai_helper.generate_email(
+openai_helper.generate_message(
     requester_linkedin_data,
     requester_parameters,
     json.load(open('../mocks/proxycurl/example.json')),
