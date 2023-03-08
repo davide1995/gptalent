@@ -73,21 +73,29 @@ def oidc_callback():
 
 @app.route('/send', methods=['POST'])
 def send():
-    user_info = auth_service.verify_token(__get_token_cookie())
-    if not user_info:
+    requester_linkedin_data = auth_service.verify_token(__get_token_cookie())
+    if not requester_linkedin_data:
         abort(401)
 
-    user_input = request.get_json()['input-text']
-    if not user_input:
+    data = request.get_json()
+    url_or_username = data['url-or-username']
+    if not url_or_username:
         return {
             'success': False,
             'user_response': 'Empty input'
         }
 
-    linkedin_url = analyse_service.adjust_for_linkedin_url(user_input)
+    linkedin_url = analyse_service.adjust_for_linkedin_url(url_or_username)
+    requester_parameters = {
+        'url': linkedin_url,
+        'searched_position': data['searched-position'],
+        'requester_position': data['requester-position'],
+        'number_of_paragraphs': data['number-of-paragraphs']
+    }
+
     response = analyse_service.analyse(
-        user_info,
-        linkedin_url,
+        requester_linkedin_data,
+        requester_parameters,
         int(app.config['PROXYCURL_MAX_USER_REQUESTS_HOUR']),
         int(app.config['OPENAI_MAX_USER_REQUESTS_HOUR'])
     )

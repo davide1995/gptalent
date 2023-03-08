@@ -12,7 +12,7 @@ from exceptions.nubela_profile_not_found_exception import NubelaProfileNotFoundE
 api_key: str
 
 
-def load_linkedin_data(user_max_allowed: int, mail_address: str, linkedin_url: str) -> dict:
+def load_linkedin_data(mail_address: str, linkedin_url: str, user_max_allowed: int) -> dict:
     logging.info(f"Loading {linkedin_url} from api")
 
     _stop_if_user_access_not_allowed(user_max_allowed, mail_address)

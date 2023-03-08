@@ -5,10 +5,27 @@
 <header>Select Target</header>
 <p class="light">Enter the LinkedIn username or profile url of the person you want to target. GPTalent will load the publicly available information to generate a targeted email.</p>
 
-
 <form class="form__group field" id="form">
-    <input type="text" class="form__field" placeholder="https://www.linkedin.com/in/victim" name="input-text" id='input-text'/>
-    <label for="input-text" class="form__label">LinkedIn Url or username</label>
+    <div>
+        <input type="text" class="form__field" placeholder="https://www.linkedin.com/in/username" name="url-or-username" id="url-or-username"/>
+        <label for="url-or-username" class="form__label">LinkedIn Url or username</label>
+    </div>
+
+    <div>
+        <input type="text" class="form__field" placeholder="Java Engineer" name="searched-position" id="researched-position"/>
+        <label for="searched-position" class="form__label">Position you are searching for</label>
+    </div>
+
+    <div>
+        <input type="text" class="form__field" placeholder="Talent Relations & Recruiting Specialist" name="requester-position" id="requester-position"/>
+        <label for="requester-position" class="form__label">Your position</label>
+    </div>
+
+    <div>
+        <input type="number" class="form__field" placeholder="2" value="2" name="number-of-paragraphs" id="number-of-paragraphs"/>
+        <label for="number-of-paragraphs" class="form__label">Number of paragraphs</label>
+    </div>
+
     <div class="mainBtnContainer">
         <button type="submit" id="submit-button" class="mainBtn" disabled>
             Generate Mail
@@ -16,34 +33,28 @@
     </div>
 </form>
 
-
-
 <div id="result-container">
 </div>
-
 
 <script>
     const form = document.querySelector('#form');
     const submitButton = document.querySelector('#submit-button');
     const resultContainer = document.querySelector("#result-container");
-    const formField = document.querySelector('#input-text');
+    const urlOrUsernameField = document.querySelector('#url-or-username');
 
     function displayLoading() {
-        submitButton.disabled=true;
-        submitButton.innerHTML="<i class='fa fa-spinner fa-spin'></i> This can take up to 30 seconds";
+        submitButton.disabled = true;
+        submitButton.innerHTML = "<i class='fa fa-spinner fa-spin'></i> This can take up to 30 seconds";
     }
 
     function hideLoading() {
-        submitButton.disabled=false;
+        submitButton.disabled = false;
         document.getElementById("submit-button").innerHTML = "Generate Mail";
     }
 
-    formField.addEventListener('input', function() {
-        submitButton.disabled = formField.value.trim() === ""
-    });
+    urlOrUsernameField.addEventListener('input', () => submitButton.disabled = urlOrUsernameField.value.trim() === "");
 
     submitButton.addEventListener('click', function(event) {
-        console.log("Let's start");
         displayLoading();
         event.preventDefault();
 

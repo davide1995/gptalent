@@ -1,7 +1,7 @@
 body {
     background-color: #000000;
     color: white;
-    font-family: Söhne,ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Cantarell,Noto Sans,sans-serif,Helvetica Neue,Arial,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol,Noto Color Emoji;
+    font-family: Söhne, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, sans-serif, Helvetica Neue, Arial, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol, Noto Color Emoji;
     margin: 0;
     font-weight: lighter;
 }
@@ -17,29 +17,29 @@ header {
     margin-top: 1em;
 }
 
-header .highlight{
+header .highlight {
     font-weight: bold;
 }
 
-.landing-page-header{
+.landing-page-header {
     margin-top: 20%;
 }
 
-nav{
+nav {
     width: 100%;
     height: 3em;
     margin: 0;
     background-color: rgb(23, 23, 23);
 }
 
-.nav-logo{
+.nav-logo {
     width: 3em;
     height: 3em;
     float: right;
     margin-right: 3em;
 }
 
-.main-container{
+.main-container {
     margin-left: auto;
     margin-right: auto;
     min-width: 400px;
@@ -47,7 +47,7 @@ nav{
     max-width: 1000px;
 }
 
-.loginBtnContainer{
+.loginBtnContainer {
     margin-top: 3em;
     text-align: center;
 }
@@ -62,12 +62,13 @@ nav{
     outline: none;
     cursor: pointer;
     border-radius: 4px
-  }
-.image-button:hover{
+}
+
+.image-button:hover {
     background-image: url('linkedin/Sign-In-Large---Hover.png');
 }
 
-.mainBtnContainer{
+.mainBtnContainer {
     width: 100%;
     text-align: center;
 }
@@ -83,7 +84,7 @@ nav{
 }
 
 .mainBtn:not(:disabled) {
-  cursor: pointer
+    cursor: pointer
 }
 
 .mainBtn:hover:not(:disabled) {
@@ -109,18 +110,15 @@ nav{
 }
 
 #result-container .error {
-  color: red
+    color: red
 }
 
-/* https://codepen.io/lucasyem/pen/ZEEYKdj */
-.form__group {
+.form__group div {
     position: relative;
-    padding: 15px 0 0;
-    margin-top: 10px;
-    width: 100%;
-  }
-  
-  .form__field {
+    padding: 15px 0;
+}
+
+.form__field {
     font-family: inherit;
     width: 100%;
     border: 0;
@@ -132,17 +130,19 @@ nav{
     background: transparent;
     transition: border-color 0.2s;
     margin-top: 10px;
-  }
-  .form__field::placeholder {
+}
+
+.form__field::placeholder {
     color: transparent;
-  }
-  .form__field:placeholder-shown ~ .form__label {
+}
+
+.form__field:placeholder-shown ~ .form__label {
     font-size: 1.3rem;
     cursor: text;
     top: 20px;
-  }
-  
-  .form__label {
+}
+
+.form__label {
     position: absolute;
     top: 0;
     display: block;
@@ -150,16 +150,16 @@ nav{
     font-size: 1rem;
     color: #9b9b9b;
     margin-bottom: 20px;
-  }
-  
-  .form__field:focus {
+}
+
+.form__field:focus {
     padding-bottom: 6px;
     font-weight: 700;
     border-width: 3px;
-    border-image: linear-gradient(to right, #11998e, #38ef7d);
     border-image-slice: 1;
-  }
-  .form__field:focus ~ .form__label {
+}
+
+.form__field:focus ~ .form__label {
     position: absolute;
     top: 0;
     display: block;
@@ -167,11 +167,10 @@ nav{
     font-size: 1rem;
     color: #11998e;
     font-weight: 700;
-  }
-  
-  /* reset input */
-  .form__field:required, .form__field:invalid {
+}
+
+.form__field:required, .form__field:invalid {
     box-shadow: none;
-  }
+}
 
 
