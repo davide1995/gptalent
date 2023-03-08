@@ -65,7 +65,7 @@ def generate_email(requester_linkedin_data: dict, requester_parameters: dict, ca
     )
 
     response = __try_to_generate_gpt_text(openai_request)
-    return openai_request, response['choices'][0]['message']['content']
+    return openai_request, response['choices'][0]['message']['content'].strip()
 
 
 def get_usage() -> float or bool:
