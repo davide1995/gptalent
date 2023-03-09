@@ -16,7 +16,6 @@ api_key: str
        wait=wait_exponential(multiplier=1, min=1, max=30),
        stop=stop_after_attempt(10))
 def __try_to_generate_gpt_text(openai_request):
-
     return openai.ChatCompletion.create(**openai_request)
 
 
@@ -34,6 +33,7 @@ def generate_message(requester_linkedin_data: dict, requester_parameters: dict, 
         'sender': f"{requester_linkedin_data['profile']['localizedFirstName']} {requester_linkedin_data['profile']['localizedLastName']}",
         'requester_position': requester_parameters['requester_position'],
         'searched_position': requester_parameters['searched_position'],
+        'searched_position_url': requester_parameters['searched_position_url'],
         'number_of_paragraphs': requester_parameters['number_of_paragraphs'],
         'location': requester_parameters['location'],
         'tone': requester_parameters['tone'],

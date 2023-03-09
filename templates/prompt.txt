@@ -5,10 +5,11 @@ Must not:
 
 Must:
 - The message must be well structured
-- The message must be signed at the end by {{ sender }}, who works for Zuhlke Asia in {{ location }} as {{ requester_position }}
+- The message must be signed at the end by myself, my name is {{ sender }}, and I work for Zuhlke Asia in {{ location }} as {{ requester_position }}
 - The message is being written in {{ year }}
 - The message must refrain from make any assumptions about the candidate
 - The candidate is a good one to fill the position {{ searched_position }}
+- The message must contain the position description url reported at {{ searched_position_url }}
 - The company for which the candidate can be good is Zuhlke {{ location }}
 - The message must contain some information about Zuhlke {{ location }}
 - The message must specify that Zuhlke is an IT consultancy that provides solutions and ideas to our clients in various industries (e.g. Banking, Insurance, Logistics)
