@@ -89,6 +89,7 @@ def send():
     requester_parameters = {
         'url': linkedin_url.strip(),
         'searched_position': data['searched-position'].strip(),
+        'searched_position_url': data['searched-position-url'].strip(),
         'requester_position': data['requester-position'].strip(),
         'number_of_paragraphs': data['number-of-paragraphs'].strip(),
         'location': data['location'],
