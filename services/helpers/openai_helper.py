@@ -12,7 +12,7 @@ from exceptions.openai_max_user_requests_allowed_exception import OpenAiMaxUserR
 
 api_key: str
 system_message = {'role': 'system', 'content': 'You are a tech recruiter.'}
-CONVERSATION_CACHE = ExpiringDict(max_len=1000, max_age_seconds=300)
+CONVERSATION_CACHE = ExpiringDict(max_len=1000, max_age_seconds=36000)
 
 
 @retry(retry=retry_if_exception_type(RateLimitError),
@@ -61,10 +61,10 @@ def generate_message(requester_linkedin_data: dict, requester_parameters: dict, 
     return update_conversation(requester_email, gpt_query, user_max_allowed)
 
 
-def update_conversation(requester_email: str, gpt_query: str, user_max_allowed: int):
+def update_conversation(requester_email: str, user_message: str, user_max_allowed: int) -> tuple[dict, str]:
     _stop_if_user_access_not_allowed(user_max_allowed, requester_email)
 
-    user_message = {'role': 'user', 'content': gpt_query}
+    user_message = {'role': 'user', 'content': user_message}
     CONVERSATION_CACHE[requester_email].append(user_message)
 
     openai_request = dict(
