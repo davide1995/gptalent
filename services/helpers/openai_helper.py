@@ -56,8 +56,7 @@ def generate_message(requester_linkedin_data: dict, requester_parameters: dict, 
 
     gpt_query = template.render(**data)
 
-    user_message = {'role': 'user', 'content': gpt_query}
-    CONVERSATION_CACHE.setdefault(requester_email, [system_message]).append(user_message)
+    CONVERSATION_CACHE[requester_email] = [system_message]
 
     return update_conversation(requester_email, gpt_query, user_max_allowed)
 
@@ -66,7 +65,7 @@ def update_conversation(requester_email: str, gpt_query: str, user_max_allowed: 
     _stop_if_user_access_not_allowed(user_max_allowed, requester_email)
 
     user_message = {'role': 'user', 'content': gpt_query}
-    CONVERSATION_CACHE.setdefault(requester_email, [system_message]).append(user_message)
+    CONVERSATION_CACHE[requester_email].append(user_message)
 
     openai_request = dict(
         model='gpt-3.5-turbo',
@@ -85,10 +84,6 @@ def update_conversation(requester_email: str, gpt_query: str, user_max_allowed: 
     CONVERSATION_CACHE[requester_email].append(assistant_message)
 
     return openai_request, openai_response_message
-
-
-def dismiss_conversation(email: str):
-    del CONVERSATION_CACHE[email]
 
 
 def get_usage() -> float or bool:
