@@ -16,7 +16,6 @@ api_key: str
        wait=wait_exponential(multiplier=1, min=1, max=30),
        stop=stop_after_attempt(10))
 def __try_to_generate_gpt_text(openai_request):
-
     return openai.ChatCompletion.create(**openai_request)
 
 
