@@ -2,8 +2,8 @@
 
 {% block content %}
 
-<header>Select Target</header>
-<p class="light">Enter the LinkedIn username or profile url of the person you want to target. GPTalent will load the publicly available information to generate a targeted message.</p>
+<header>Provide some information</header>
+<p class="light">Enter the candidate LinkedIn username or profile url. GPTalent will load the publicly available information to generate a targeted message.</p>
 
 <form class="form__group field" id="form">
     <div>
@@ -140,6 +140,8 @@ Dedicated budget for Training & Development</textarea>
                     img.setAttribute("src", profileImage)
                     resultContainer.insertBefore(img, resultContainer.children[0]);
                 }
+
+                setTimeout(() => div.scrollIntoView(), 100)
             })
             .catch(error => {
                 hideLoading();
