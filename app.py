@@ -114,6 +114,17 @@ def send():
     return jsonify(response)
 
 
+@app.route('/update', methods=['POST'])
+def send():
+    requester_linkedin_data = auth_service.verify_token(__get_token_cookie())
+    if not requester_linkedin_data:
+        abort(401)
+
+    data = request.get_json()
+    user_message = data['user-message']
+    print(user_message)
+
+
 @app.route('/profile_image/<username>')
 def get_profile_image(username):
     image = analyse_service.get_profile_image_by_username(username)

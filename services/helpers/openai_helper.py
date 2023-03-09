@@ -2,6 +2,7 @@ import json
 import datetime
 import openai
 import requests
+from expiringdict import ExpiringDict
 from openai.error import RateLimitError
 from tenacity import *
 from jinja2 import Template
@@ -10,6 +11,8 @@ from dataaccess.DB import DB
 from exceptions.openai_max_user_requests_allowed_exception import OpenAiMaxUserRequestsAllowedException
 
 api_key: str
+system_message = {'role': 'system', 'content': 'You are a tech recruiter.'}
+CONVERSATION_CACHE = ExpiringDict(max_len=1000, max_age_seconds=300)
 
 
 @retry(retry=retry_if_exception_type(RateLimitError),
@@ -21,7 +24,9 @@ def __try_to_generate_gpt_text(openai_request):
 
 
 def generate_message(requester_linkedin_data: dict, requester_parameters: dict, candidate_linkedin_data: dict, user_max_allowed: int) -> tuple[dict, str]:
-    _stop_if_user_access_not_allowed(user_max_allowed, requester_linkedin_data['email'])
+    requester_email = requester_linkedin_data['email']
+
+    _stop_if_user_access_not_allowed(user_max_allowed, requester_email)
 
     openai.api_key = api_key
 
@@ -51,12 +56,21 @@ def generate_message(requester_linkedin_data: dict, requester_parameters: dict, 
 
     gpt_query = template.render(**data)
 
+    user_message = {'role': 'user', 'content': gpt_query}
+    CONVERSATION_CACHE.setdefault(requester_email, [system_message]).append(user_message)
+
+    return update_conversation(requester_email, gpt_query, user_max_allowed)
+
+
+def update_conversation(requester_email: str, gpt_query: str, user_max_allowed: int):
+    _stop_if_user_access_not_allowed(user_max_allowed, requester_email)
+
+    user_message = {'role': 'user', 'content': gpt_query}
+    CONVERSATION_CACHE.setdefault(requester_email, [system_message]).append(user_message)
+
     openai_request = dict(
         model='gpt-3.5-turbo',
-        messages=[
-            {'role': 'system', 'content': 'You are a tech recruiter.'},
-            {'role': 'user', 'content': gpt_query}
-        ],
+        messages=CONVERSATION_CACHE[requester_email],
         temperature=1,
         max_tokens=1000,
         top_p=1,
@@ -64,8 +78,17 @@ def generate_message(requester_linkedin_data: dict, requester_parameters: dict, 
         presence_penalty=0
     )
 
-    response = __try_to_generate_gpt_text(openai_request)
-    return openai_request, response['choices'][0]['message']['content'].strip()
+    openai_response = __try_to_generate_gpt_text(openai_request)
+    openai_response_message = openai_response['choices'][0]['message']['content'].strip()
+
+    assistant_message = {'role': 'assistant', 'content': openai_response_message}
+    CONVERSATION_CACHE[requester_email].append(assistant_message)
+
+    return openai_request, openai_response_message
+
+
+def dismiss_conversation(email: str):
+    del CONVERSATION_CACHE[email]
 
 
 def get_usage() -> float or bool:
