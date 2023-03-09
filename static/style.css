@@ -160,6 +160,12 @@ label {
     justify-content: space-around;
 }
 
+.position div {
+    flex: 1;
+    margin-top: -15px;
+    margin-bottom: -15px;
+}
+
 .form__field:focus {
     padding-bottom: 6px;
     font-weight: 700;
