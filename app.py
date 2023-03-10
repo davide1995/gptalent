@@ -79,14 +79,9 @@ def send():
         abort(401)
 
     data = request.get_json()
-    url_or_username = data['url-or-username']
-    if not url_or_username:
-        return {
-            'success': False,
-            'user_response': 'Empty input'
-        }
 
-    linkedin_url = analyse_service.adjust_for_linkedin_url(url_or_username)
+    linkedin_url = __get_linkedin_url_profile(data['url-or-username'])
+
     requester_parameters = {
         'url': linkedin_url.strip(),
         'searched_position': data['searched-position'].strip(),
@@ -118,6 +113,26 @@ def send():
     template = render_template('message.html', data=response)
 
     return jsonify(template)
+
+
+@app.route('/update', methods=['POST'])
+def update():
+    requester_linkedin_data = auth_service.verify_token(__get_token_cookie())
+    if not requester_linkedin_data:
+        abort(401)
+
+    data = request.get_json()
+
+    linkedin_url = __get_linkedin_url_profile(data['url-or-username'])
+    user_message = data['user-message']
+
+    response = analyse_service.adjust(
+        requester_linkedin_data['email'],
+        user_message,
+        int(app.config['OPENAI_MAX_USER_REQUESTS_HOUR'])
+    )
+
+    return __build_response(response, linkedin_url)
 
 
 @app.route('/profile_image/<username>')
@@ -159,6 +174,28 @@ def readiness():
 def __get_token_cookie() -> bytes or None:
     token = request.cookies.get('token')
     return str.encode(token) if token is not None else None
+
+
+def __get_linkedin_url_profile(url_or_username: str) -> str or dict:
+    if not url_or_username:
+        return {
+            'success': False,
+            'user_response': 'Empty input'
+        }
+
+    return analyse_service.adjust_for_linkedin_url(url_or_username)
+
+
+def __build_response(response: dict, linkedin_url: str):
+    if response['success']:
+        url_profile_image = url_for(
+            'get_profile_image',
+            username=analyse_service.get_username_from_url(linkedin_url),
+            _external=True
+        )
+        response['profile_image'] = url_profile_image
+
+    return jsonify(response)
 
 
 if __name__ == '__main__':
