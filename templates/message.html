@@ -1,7 +1,10 @@
 {% if data.success %}
 <img src="{{ data.profile_image }}">    
-<div>
+<div id="{{ data.id }}">
 {{ data.user_response }}
+</div>
+<div class="copy-btn-container">
+<button class="copy" id="copy{{ data.id }}" onclick="copyText('{{ data.id }}')"><i class="fa fa-clone"></i> Copy message</button>
 </div>
 {% else %}
 <div class="error">

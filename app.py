@@ -5,6 +5,7 @@ from io import BytesIO
 import logging
 import os
 import imghdr
+import hashlib
 
 from dataaccess.DB import DB
 from dataaccess.inmemory_db import InMemoryDB
@@ -111,6 +112,8 @@ def send():
             _external=True
         )
         response['profile_image'] = url_profile_image
+
+    response['id'] = hashlib.sha256(response['user_response'].encode('utf-8')).hexdigest()
 
     template = render_template('message.html', data=response)
 

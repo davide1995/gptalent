@@ -190,3 +190,14 @@ label {
 textarea {
     width: 100%;
 }
+
+button.copy{
+    background-color: #000000;
+    color: #fff;
+    cursor: pointer
+}
+
+#result-container .copy-btn-container {
+    width: 100%;
+    text-align: right;
+}
