@@ -104,6 +104,11 @@ def send():
         int(app.config['OPENAI_MAX_USER_REQUESTS_HOUR'])
     )
 
+    data = {
+            'result': response['success'],
+            'user_response': response['user_response']
+    }
+
     if response['success']:
         url_profile_image = url_for(
             'get_profile_image',
@@ -111,6 +116,10 @@ def send():
             _external=True
         )
         response['profile_image'] = url_profile_image
+        data['profile_image'] = url_profile_image
+
+    rendered_template = render_template('message.html', data=data)
+    response['template'] = rendered_template
 
     return jsonify(response)
 
