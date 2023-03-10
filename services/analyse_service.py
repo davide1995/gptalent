@@ -45,16 +45,14 @@ def analyse(requester_linkedin_data: dict, requester_parameters: dict, user_max_
         return {
             'success': True,
             'user_response': gpt_response,
-            'profile_image': None,
-            'template': None
+            'profile_image': None
         }
     except (NubelaAuthException, NubelaProfileNotFoundException, NubelaProfileNotEnoughInformationException,
             NubelaMaxUserRequestsAllowedException, OpenAiMaxUserRequestsAllowedException) as e:
         DB.get_instance().add_error(requester_linkedin_data, linkedin_url, type(e).__name__, e.message)
         return {
             'success': False,
-            'user_response': e.message,
-            'template': None
+            'user_response': e.message
         }
 
 

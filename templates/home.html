@@ -120,7 +120,7 @@ Dedicated budget for Training & Development</textarea>
             .then(response => response.json())
             .then(data => {
                 hideLoading();
-                resultContainer.innerHTML = data['template'] + resultContainer.innerHTML;
+                resultContainer.innerHTML = data + resultContainer.innerHTML;
                 setTimeout(() => resultContainer.scrollIntoView(), 500);
             })
             .catch(error => {
