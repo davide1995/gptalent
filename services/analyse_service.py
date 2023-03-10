@@ -49,7 +49,7 @@ def analyse(requester_linkedin_data: dict, requester_parameters: dict, user_max_
         return __build_fail_response(e)
 
 
-def adjust(requester_email: str, user_message, user_max_allowed_openai: int) -> dict:
+def adjust(requester_email: str, user_message: str, user_max_allowed_openai: int) -> dict:
     try:
         _, gpt_response = openai_helper.update_conversation(requester_email, user_message, user_max_allowed_openai)
         return __build_success_response(gpt_response)
