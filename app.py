@@ -112,7 +112,9 @@ def send():
         )
         response['profile_image'] = url_profile_image
 
-    return jsonify(response)
+    template = render_template('message.html', data=response)
+
+    return jsonify(template)
 
 
 @app.route('/profile_image/<username>')

@@ -14,7 +14,7 @@
     <div class="row position">
         <div>
             <input type="text" class="form__field" placeholder="Java Engineer" name="searched-position" id="searched-position"/>
-            <label for="searched-position" class="form__label">Researched position</label>
+            <label for="searched-position" class="form__label">Open position</label>
         </div>
 
         <div>
@@ -120,28 +120,8 @@ Dedicated budget for Training & Development</textarea>
             .then(response => response.json())
             .then(data => {
                 hideLoading();
-                const firstElement = resultContainer.innerHTML === ""
-
-                if (!firstElement) {
-                    const hr = document.createElement("hr")
-                    resultContainer.insertBefore(hr, resultContainer.children[0]);
-                }
-
-                const div = document.createElement("div");
-                div.innerHTML = data['user_response'];
-                if (data['success'] === false) {
-                  div.classList.add("error")
-                }
-                resultContainer.insertBefore(div, resultContainer.children[0]);
-
-                const profileImage = data['profile_image']
-                if (profileImage) {
-                    const img = document.createElement("img")
-                    img.setAttribute("src", profileImage)
-                    resultContainer.insertBefore(img, resultContainer.children[0]);
-                }
-
-                setTimeout(() => resultContainer.scrollIntoView(), 500)
+                resultContainer.innerHTML = data + resultContainer.innerHTML;
+                setTimeout(() => resultContainer.scrollIntoView(), 500);
             })
             .catch(error => {
                 hideLoading();

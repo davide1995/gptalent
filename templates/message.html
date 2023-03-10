@@ -1,0 +1,11 @@
+{% if data.success %}
+<img src="{{ data.profile_image }}">    
+<div>
+{{ data.user_response }}
+</div>
+{% else %}
+<div class="error">
+{{ data.user_response }}
+</div>
+{% endif %}
+<hr>
