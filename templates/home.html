@@ -103,16 +103,14 @@ Dedicated budget for Training & Development</textarea>
     }
 
     function copyText(id) {
-        const text = document.getElementById(id).textContent;
-        const copyButton = document.querySelector('#copy'+id);
+        const text = document.getElementById(id).textContent.trim();
+        const copyButton = document.querySelector('#copy' + id);
         navigator.clipboard.writeText(text)
-        .then(() => {
-            copyButton.innerHTML = "<i class='fa fa-check'></i> Copied!";
-            setTimeout(() => {
-                copyButton.innerHTML = "<i class='fa fa-clone'></i> Copy message";
-            }, 1000);
-        })
-        .catch((error) => console.error(error));
+            .then(() => {
+                copyButton.innerHTML = "<i class='fa fa-check'></i> Copied!";
+                setTimeout(() => copyButton.innerHTML = "<i class='fa fa-clone'></i> Copy message", 1000);
+            })
+            .catch((error) => console.error(error));
     }
 
     urlOrUsernameField.addEventListener('input', () => submitButton.disabled = urlOrUsernameField.value.trim() === "");

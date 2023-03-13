@@ -6,6 +6,7 @@ import logging
 import os
 import imghdr
 import hashlib
+import json
 
 from dataaccess.DB import DB
 from dataaccess.inmemory_db import InMemoryDB
@@ -100,17 +101,10 @@ def send():
         int(app.config['OPENAI_MAX_USER_REQUESTS_HOUR'])
     )
 
-    if response['success']:
-        url_profile_image = url_for(
-            'get_profile_image',
-            username=analyse_service.get_username_from_url(linkedin_url),
-            _external=True
-        )
-        response['profile_image'] = url_profile_image
-
     response['id'] = hashlib.sha256(response['user_response'].encode('utf-8')).hexdigest()
-
-    template = render_template('message.html', data=response)
+    response = __build_response(response, linkedin_url)
+    
+    template = render_template('message.html', data=json.loads(response.data.decode('utf-8')))
 
     return jsonify(template)
 
