@@ -68,30 +68,43 @@ nav {
     background-image: url('linkedin/Sign-In-Large---Hover.png');
 }
 
-.mainBtnContainer {
+.mainBtnContainer, .secondBtnContainer {
     width: 100%;
+}
+
+.mainBtnContainer {
     text-align: center;
 }
 
+.secondBtnContainer {
+    text-align: right;
+    padding: 0 !important;
+}
+
 .mainBtn {
-    width: 215px;
-    height: 40px;
+    padding: 1em 2em;
+}
+
+.secondaryBtn {
+    padding: 0.5em 1em;
+}
+
+.mainBtn, .secondaryBtn {
     background-color: rgb(255, 255, 255);
     border-radius: 4px;
     border: none;
     outline: none;
-    margin: 3em;
 }
 
-.mainBtn:not(:disabled) {
+.mainBtn:not(:disabled), .secondaryBtn:not(:disabled) {
     cursor: pointer
 }
 
-.mainBtn:hover:not(:disabled) {
+.mainBtn:hover:not(:disabled), .secondaryBtn:hover:not(:disabled) {
     background-color: rgb(235, 235, 235);
 }
 
-#result-container div {
+#result-container .user_response {
     font-family: monospace;
     white-space: pre-wrap;
     overflow-wrap: normal;
@@ -189,4 +202,9 @@ label {
 
 textarea {
     width: 100%;
+}
+
+.benefits {
+    padding-bottom: 0;
+    margin-top: 2rem;
 }

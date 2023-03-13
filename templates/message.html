@@ -1,11 +1,20 @@
 {% if data.success %}
-<img src="{{ data.profile_image }}">    
-<div>
-{{ data.user_response }}
-</div>
+    <img src="{{ data.profile_image }}">
+    <div class="user_response">{{ data.user_response }}</div>
+
+    <form class="form__group" id="form-feedback">
+        <div class="benefits">
+            <label class="form__label" for="abc">Feedback:</label><br/>
+            <textarea id="abc" name="abc" rows="5"></textarea>
+        </div>
+        <div class="secondBtnContainer">
+            <button type="submit" class="secondaryBtn" disabled>Update message!</button>
+        </div>
+    </form>
+
 {% else %}
-<div class="error">
-{{ data.user_response }}
-</div>
+    <div class="error">
+        {{ data.user_response }}
+    </div>
 {% endif %}
 <hr>
