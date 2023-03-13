@@ -103,7 +103,7 @@ def send():
 
     response['id'] = hashlib.sha256(response['user_response'].encode('utf-8')).hexdigest()
     response = __build_response(response, linkedin_url)
-    
+
     template = render_template('message.html', data=json.loads(response.data.decode('utf-8')))
 
     return jsonify(template)
