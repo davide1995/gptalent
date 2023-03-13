@@ -1,5 +1,5 @@
 body {
-    background-color: #000000;
+    background-color: #000;
     color: white;
     font-family: Söhne, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, sans-serif, Helvetica Neue, Arial, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol, Noto Color Emoji;
     margin: 0;
@@ -207,4 +207,19 @@ textarea {
 .benefits {
     padding-bottom: 0;
     margin-top: 2rem;
+}
+
+button.copy {
+    background-color: #000;
+    color: #fff;
+    cursor: pointer
+}
+
+button.copy:hover {
+    opacity: 0.75;
+}
+
+#result-container .copy-btn-container {
+    width: 100%;
+    text-align: right;
 }
