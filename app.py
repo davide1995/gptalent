@@ -101,13 +101,11 @@ def send():
         int(app.config['OPENAI_MAX_USER_REQUESTS_HOUR'])
     )
 
-    response['id'] = hashlib.sha256(response['user_response'].encode('utf-8')).hexdigest()
+    response['id'] = __generate_id(response)
     response['linkedin_url'] = linkedin_url
     response = __build_response(response, linkedin_url)
 
-    template = render_template('message.html', data=json.loads(response.data.decode('utf-8')))
-
-    return jsonify(template)
+    return __build_template_as_response('message.html', response)
 
 
 @app.route('/update', methods=['POST'])
@@ -127,13 +125,11 @@ def update():
         int(app.config['OPENAI_MAX_USER_REQUESTS_HOUR'])
     )
 
-    response['id'] = hashlib.sha256(response['user_response'].encode('utf-8')).hexdigest()
+    response['id'] = __generate_id(response)
     response['linkedin_url'] = linkedin_url
     response = __build_response(response, linkedin_url)
 
-    template = render_template('message.html', data=json.loads(response.data.decode('utf-8')))
-
-    return jsonify(template)
+    return __build_template_as_response('message.html', response)
 
 
 @app.route('/profile_image/<username>')
@@ -197,6 +193,17 @@ def __build_response(response: dict, linkedin_url: str):
         response['profile_image'] = url_profile_image
 
     return jsonify(response)
+
+
+def __build_template_as_response(template_name: str, response: dict):
+    data = json.loads(response.data.decode('utf-8'))
+    template = render_template(template_name, data=data)
+
+    return jsonify(template)
+
+
+def __generate_id(response: dict):
+    return hashlib.sha256(response['user_response'].encode('utf-8')).hexdigest()
 
 
 if __name__ == '__main__':

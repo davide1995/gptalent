@@ -104,7 +104,7 @@ Dedicated budget for Training & Development</textarea>
 
     function copyText(id) {
         const text = document.getElementById(id).textContent.trim();
-        const copyButton = document.getElementById('copy' + id);
+        const copyButton = document.getElementById('copy-' + id);
         navigator.clipboard.writeText(text)
             .then(() => {
                 copyButton.innerHTML = "<i class='fa fa-check'></i> Copied!";
@@ -114,15 +114,15 @@ Dedicated budget for Training & Development</textarea>
     }
 
     function enableUpdateButton(id) {
-        const input = document.getElementById('update' + id);
-        const updateButton = document.getElementById('update-btn' + id);
+        const input = document.getElementById('update-' + id);
+        const updateButton = document.getElementById('update-btn-' + id);
         updateButton.disabled = input.value.trim() === ""; 
     }
 
     function updateMessage(id) {
         event.preventDefault();
-        const updateButton = document.getElementById('update-btn' + id);
-        const textBox = document.getElementById('update' + id);
+        const updateButton = document.getElementById('update-btn-' + id);
+        const textBox = document.getElementById('update-' + id);
         const inputValue = textBox.value;
         const form = document.getElementById('form-feedback-' + id);
         const data = new FormData(form);
