@@ -5,7 +5,7 @@
 <header>Provide some information</header>
 <p class="light">Enter the candidate LinkedIn username or profile url. GPTalent will load the publicly available information to generate a targeted message.</p>
 
-<form class="form__group field" id="form">
+<form class="form__group" id="form">
     <div>
         <input type="text" class="form__field" placeholder="https://www.linkedin.com/in/username" name="url-or-username" id="url-or-username"/>
         <label for="url-or-username" class="form__label">LinkedIn Url or username</label>
@@ -92,19 +92,19 @@ Dedicated budget for Training & Development</textarea>
     const resultContainer = document.querySelector("#result-container");
     const urlOrUsernameField = document.querySelector('#url-or-username');
 
-    function displayLoading() {
-        submitButton.disabled = true;
-        submitButton.innerHTML = "<i class='fa fa-spinner fa-spin'></i> This can take up to 30 seconds";
+    function displayLoading(button) {
+        button.disabled = true;
+        button.innerHTML = "<i class='fa fa-spinner fa-spin'></i> This can take up to 30 seconds";
     }
 
-    function hideLoading() {
+    function hideLoadingForSubmitButton() {
         submitButton.disabled = false;
-        document.getElementById("submit-button").innerHTML = "Generate the message!";
+        submitButton.innerHTML = "Generate the message!";
     }
 
     function copyText(id) {
         const text = document.getElementById(id).textContent.trim();
-        const copyButton = document.querySelector('#copy' + id);
+        const copyButton = document.getElementById('copy-' + id);
         navigator.clipboard.writeText(text)
             .then(() => {
                 copyButton.innerHTML = "<i class='fa fa-check'></i> Copied!";
@@ -113,10 +113,44 @@ Dedicated budget for Training & Development</textarea>
             .catch((error) => console.error(error));
     }
 
+    function enableUpdateButton(id) {
+        const input = document.getElementById('update-' + id);
+        const updateButton = document.getElementById('update-btn-' + id);
+        updateButton.disabled = input.value.trim() === ""; 
+    }
+
+    function updateMessage(id) {
+        event.preventDefault();
+        const updateButton = document.getElementById('update-btn-' + id);
+        const textBox = document.getElementById('update-' + id);
+        const inputValue = textBox.value;
+        const form = document.getElementById('form-feedback-' + id);
+        const data = new FormData(form);
+        displayLoading(updateButton);
+        textBox.disabled = true;
+        fetch('/update', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(Object.fromEntries(data))
+            })
+            .then(response => response.json())
+            .then(data => {
+                updateButton.innerHTML = "Update message!";
+                textBox.textContent = inputValue;
+                resultContainer.innerHTML = data + resultContainer.innerHTML;
+                setTimeout(() => resultContainer.scrollIntoView(), 500);
+            })
+            .catch(error => {
+                alert('Error: ' + error);
+            });    
+    }
+
     urlOrUsernameField.addEventListener('input', () => submitButton.disabled = urlOrUsernameField.value.trim() === "");
 
     submitButton.addEventListener('click', function(event) {
-        displayLoading();
+        displayLoading(submitButton);
         event.preventDefault();
 
         const data = new FormData(form);
@@ -130,12 +164,12 @@ Dedicated budget for Training & Development</textarea>
             })
             .then(response => response.json())
             .then(data => {
-                hideLoading();
+                hideLoadingForSubmitButton();
                 resultContainer.innerHTML = data + resultContainer.innerHTML;
                 setTimeout(() => resultContainer.scrollIntoView(), 500);
             })
             .catch(error => {
-                hideLoading();
+                hideLoadingForSubmitButton();
                 alert('Error: ' + error);
             });
         return false;
