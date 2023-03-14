@@ -102,6 +102,7 @@ def send():
     )
 
     response['id'] = hashlib.sha256(response['user_response'].encode('utf-8')).hexdigest()
+    response['linkedin_url'] = linkedin_url
     response = __build_response(response, linkedin_url)
 
     template = render_template('message.html', data=json.loads(response.data.decode('utf-8')))
@@ -126,7 +127,14 @@ def update():
         int(app.config['OPENAI_MAX_USER_REQUESTS_HOUR'])
     )
 
-    return __build_response(response, linkedin_url)
+    response['id'] = hashlib.sha256(response['user_response'].encode('utf-8')).hexdigest()
+    response['linkedin_url'] = linkedin_url
+    response = __build_response(response, linkedin_url)
+
+    template = render_template('message.html', data=json.loads(response.data.decode('utf-8')))
+
+    return jsonify(template)
+    #return __build_response(response, linkedin_url)
 
 
 @app.route('/profile_image/<username>')

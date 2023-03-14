@@ -2,15 +2,16 @@
     <img src="{{ data.profile_image }}">
     <div id="{{ data.id }}" class="user_response">{{ data.user_response }}</div>
     <div class="copy-btn-container">
-        <button class="copy" id="copy{{ data.id }}" onclick="copyText('{{ data.id }}')"><i class="fa fa-clone"></i> Copy message</button>
+        <button type="button" class="copy" id="copy{{ data.id }}" onclick="copyText('{{ data.id }}')"><i class="fa fa-clone"></i> Copy message</button>
     </div>
-    <form class="form__group" id="form-feedback">
+    <form class="form__group" id="form-feedback-{{ data.id }}">
         <div class="benefits">
-            <label class="form__label" for="abc">Feedback:</label><br/>
-            <textarea id="abc" name="abc" rows="5"></textarea>
+            <label class="form__label" for="update{{ data.id }}">Feedback:</label><br/>
+            <textarea id="update{{ data.id }}" name="user-message" rows="5" oninput="enableUpdateButton('{{ data.id }}')"></textarea>
         </div>
+        <input type="hidden" name="url-or-username" value="{{ data.linkedin_url }}">
         <div class="secondBtnContainer">
-            <button type="submit" class="secondaryBtn" disabled>Update message!</button>
+            <button type="button" id="update-btn{{ data.id }}" class="secondaryBtn" onclick="updateMessage('{{ data.id }}')" disabled>Update message!</button>
         </div>
     </form>
 {% else %}
