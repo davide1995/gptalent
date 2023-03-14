@@ -97,7 +97,7 @@ Dedicated budget for Training & Development</textarea>
         button.innerHTML = "<i class='fa fa-spinner fa-spin'></i> This can take up to 30 seconds";
     }
 
-    function hideLoadingForGenerate() {
+    function hideLoadingForSubmitButton() {
         submitButton.disabled = false;
         submitButton.innerHTML = "Generate the message!";
     }
@@ -164,12 +164,12 @@ Dedicated budget for Training & Development</textarea>
             })
             .then(response => response.json())
             .then(data => {
-                hideLoadingForGenerate();
+                hideLoadingForSubmitButton();
                 resultContainer.innerHTML = data + resultContainer.innerHTML;
                 setTimeout(() => resultContainer.scrollIntoView(), 500);
             })
             .catch(error => {
-                hideLoadingForGenerate();
+                hideLoadingForSubmitButton();
                 alert('Error: ' + error);
             });
         return false;

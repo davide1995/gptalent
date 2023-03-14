@@ -134,7 +134,6 @@ def update():
     template = render_template('message.html', data=json.loads(response.data.decode('utf-8')))
 
     return jsonify(template)
-    #return __build_response(response, linkedin_url)
 
 
 @app.route('/profile_image/<username>')
