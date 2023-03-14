@@ -212,7 +212,9 @@ textarea {
 button.copy {
     background-color: #000;
     color: #fff;
-    cursor: pointer
+    cursor: pointer;
+    border: none;
+    outline: none;
 }
 
 button.copy:hover {
